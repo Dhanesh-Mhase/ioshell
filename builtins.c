@@ -1,3 +1,4 @@
+#include <readline/history.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,6 +51,16 @@ int run_builtin(char **args) {
             if (args[i + 1]) printf(" ");
         }
         printf("\n");
+        return 1;
+    }
+
+    /* history — show command history */
+    if (strcmp(args[0], "history") == 0) {
+        HIST_ENTRY **list = history_list();
+        if (list) {
+            for (int i = 0; list[i]; i++)
+                printf("  %d  %s\n", i + history_base, list[i]->line);
+        }
         return 1;
     }
 
